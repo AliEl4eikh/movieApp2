@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vueflex</title>
+    <link rel="stylesheet" href="./assets/css/vueflix.css">
+    <link rel="stylesheet" href="./assets/css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./assets/img/dunkirkSmall.jpg">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
+</head>
+<body>
+
+    <div id="app">
+        <section class="hero is-primary is-medium">
+          <router-view></router-view>
+    
+          <div class="hero-foot">
+            <div class="columns is-mobile">
+              <div v-for="movieChoice in movieChoices" class="column">
+                <router-link :to="`/${movieChoice.id}`" tag="li" class="movie-choice">
+                  <i aria-hidden="true" :class="[{ 'fas fa-check-circle favorite-check': movieChoice.favorite }]"></i>
+                  <img :src="`${movieChoice.smallImgSrc}`" class='desktop thumbnail'/>
+                  <p class="mobile movie-title">{{ movieChoice.subtitle }}</p>
+                </router-link>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+
+
+
+    <script>
+
+
+const movies = {
+  "dunkirk": {
+    "id": 'dunkirk',
+    "title": "Dunkirk",
+    "subtitle": "Dunkirk",
+    "description": `Miraculous evacuation of Allied soldiers from Belgium, Britain, Canada, and France, who were cut off and surrounded by the German army from the beaches and harbor of Dunkirk, France, during the Battle of France in World War II.`,
+    "largeImgSrc": `url('https://www.almo7eb.com/ar/upload/2017/07/DunKirk_2017.jpg')`,
+    "smallImgSrc": './assets/img/dunkirkSmall.jpg',
+    "releaseDate": 'July 21 2017',
+    "duration": '1hr 46min',
+    "genre": 'Action, Drama, History',
+    "trailerPath": 'https://www.youtube.com/embed/F-eMt3SrfFU',
+    "favorite": false
+  },
+  "interstellar": {
+    "id": 'interstellar',
+    "title": "Interstellar",
+    "subtitle": "Interstellar",
+    "description": `Interstellar chronicles the adventures of a group of explorers who make use of a newly discovered wormhole to surpass the limitations on human space travel and conquer the vast distances involved in an interstellar voyage.`,
+    "largeImgSrc": `url('https://in.bmscdn.com/iedb/movies/images/extra/vertical_logo/mobile/thumbnail/xxlarge/interstellar-et00019066-19-02-2021-02-25-12.jpg')`,
+    "smallImgSrc": './assets/img/interstellarSmall.jpg',
+    "releaseDate": 'November 7 2014',
+    "duration": '2hr 49min',
+    "genre": 'Adventure, Drama',
+    "trailerPath": 'https://www.youtube.com/embed/zSWdZVtXT7E',
+    "favorite": false
+  },
+  "the-dark-knight-rises": {
+    "id": 'the-dark-knight-rises',
+    "title": "The Dark Knight Rises",
+    "subtitle": "TDKR",
+    "description": `Batman encounters the mysterious Selina Kyle and the villainous Bane, a new terrorist leader who overwhelms Gotham's finest. The Dark Knight resurfaces to protect a city that has branded him an enemy.`,
+    "smallImgSrc": './assets/img/tdkrSmall.jpg',
+    "largeImgSrc": `url('https://contentserver.com.au/assets/598411_p173378_p_v8_au.jpg')`,
+    "releaseDate": 'July 20 2012',
+    "duration": '2hr 44min',
+    "genre": 'Action, Thriller',
+    "trailerPath": 'https://www.youtube.com/embed/g8evyE9TuYk',
+    "favorite": false
+  },
+  "inception": {
+    "id": 'inception',
+    "title": "Inception",
+    "subtitle": "Inception",
+    "description": `Cobb, a skilled thief is offered a chance to regain his old life as payment for a task considered to be impossible: \"inception\", the implantation of another person's idea into a target's subconscious.`,
+    "smallImgSrc": './assets/img/inceptionSmall.jpg',
+    "largeImgSrc": `url('https://media.elcinema.com/uploads/_640x_2028a02da250c809cc4493409e19f7f80e2f37f9045ef28cf033448f56968505.jpg')`,
+    "releaseDate": 'July 10 2010',
+    "duration": '2hr 28min',
+    "genre": 'Action, Adventure, Sci-Fi',
+    "trailerPath": 'https://www.youtube.com/embed/8hP9D6kZseM',
+    "favorite": false
+  },
+  "the-prestige": {
+    "id": 'the-prestige',
+    "title": "The Prestige",
+    "subtitle": "Prestige",
+    "description": `A mysterious story of two magicians whose intense rivalry leads them on a life-long battle for supremacy - to create the ultimate illusion whilst sacrificing everything they have to outwit the other.`,
+    "smallImgSrc": './assets/img/thePrestigeSmall.jpg',
+    "largeImgSrc": `url('https://i1.wp.com/storage.googleapis.com/bawabaa/2020/06/%D8%A8%D8%AF%D9%88%D9%86-%D8%B9%D9%86%D9%88%D8%A7%D9%86-1-453.jpg?resize=1075%2C570&ssl=1')`,
+    "releaseDate": 'October 20 2006',
+    "duration": '2hr 10min',
+    "genre": 'Drama, Mystery, Sci-Fi',
+    "trailerPath": 'https://www.youtube.com/embed/ijXruSzfGEc',
+    "favorite": false
+  }
+}
+
+// 1. Define route components.
+const Intro = {
+  template: `
+    <div class="hero-body" style="background: #1e1d1d">
+      <div class="container has-text-centered">
+        <div class="columns">
+          <div class="column is-half is-offset-one-quarter vertical-align">
+            <h1 class="home-intro">
+              VueFlix
+            </h1>
+            <p class="home-subintro">Select a movie below from the list of critically acclaimed Christopher Nolan films.</p>
+          </div>
+        </div>
+      </div>
+    </div>`
+}
+
+const Movie = {
+  template: 
+    `<div :class="[{ 'favorite-shadow': selectedMovie.favorite }, 'hero-body']" :style="{ 'background-image': selectedMovie.largeImgSrc, background: 'center center'}">
+        <header class="nav">
+          <div class="container">
+            <div class="nav-left">
+              <a class="nav-item">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+              </a>
+              <router-link to="/" class="nav-item is-active">
+                Home
+              </router-link>
+              <a class="nav-item is-active">
+                <span class="tag is-rounded">
+                Films
+                </span>
+              </a>
+              <a class="nav-item is-active">
+                Shows
+              </a>
+              <a class="nav-item is-active">
+                Music
+              </a>
+            </div>
+            <div class="nav-right desktop">
+              <span class="nav-item">
+                <router-link to="/"  class="title">
+                  VueFlix
+                </router-link>
+              </span>
+            </div>
+          </div>
+        </header>
+        <div class="container description-container">
+          <div class="columns">
+            <div class="column is-three-quarters">
+              <h1 class="title">
+                {{ selectedMovie.title }}
+              </h1>
+              <h4 class="subtitle">
+                <p class="subtitle-tag">{{ selectedMovie.duration }} |</p>
+                <p class="subtitle-tag">{{ selectedMovie.genre }} |</p>
+                <p class="subtitle-tag">{{ selectedMovie.releaseDate }}</p>
+              </h4>
+              <p class="description">{{ selectedMovie.description }}</p>
+              <div class="links">
+                <router-link :to="{path: '/' + $route.params.id + '/trailer'}" class="button play-button">Play <i class="fa fa-play"></i></router-link>
+                <a class="button is-link favorites-button" @click="addToFavorites(selectedMovie)">
+                  <span :class="[{ 'hide': selectedMovie.favorite }]">Add to</span><span :class="[{ 'hide': !selectedMovie.favorite }]">Remove from </span>&nbsp;favorites <i class="fa fa-plus-square-o"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>`,
+  data () {
+    return {
+      selectedMovie: movies[this.$route.params.id]
+    }
+  },
+  watch: {
+    $route () {
+      this.selectMovie()
+    }
+  },
+  methods: {
+    selectMovie () {
+      this.selectedMovie = movies[this.$route.params.id]
+    },
+    addToFavorites (selectedMovie) {
+      movies[this.$route.params.id].favorite = !movies[this.$route.params.id].favorite
+    }
+  }
+}
+
+const MovieTrailer = {
+  template: `
+    <div class="trailer-body" style="background: #1e1d1d">
+      <div class="has-text-centered">
+        <div class="columns">
+          <div class="column vertical-align">
+            <iframe
+              allowFullScreen
+              frameborder="0"
+              height="376"
+              :src="trailerUrlPath"
+              style="width: 100%; min-width: 536px"
+            />
+          </div>
+        </div>
+      </div>
+    </div>`,
+  data () {
+    return {
+      trailerUrlPath: movies[this.$route.params.id].trailerPath
+    }
+  }
+}
+
+// 2. Define routes
+const routes = [
+  { path: '/', component: Intro },
+  { path: '/:id', component: Movie },
+  { path: '/:id/trailer', component: MovieTrailer }
+]
+
+const router = new VueRouter({
+  routes
+})
+
+const rootApp = new Vue({
+  el: '#app',
+  router: router,
+  data () {
+    return {
+      movieChoices: movies,
+    }
+  }
+})
+
+
+    </script>
+</body>
+</html>
