@@ -1,3 +1,8 @@
+@charset "UTF-8";
+* {
+  box-sizing: border-box;
+}
+
 html, body {
   height: 100%;
   background: linear-gradient(to bottom right, #7f3737, #2a2122);
@@ -30,15 +35,18 @@ html .hero .hero-body, body .hero .hero-body {
     background-color: rgba(0, 0, 0, 0.8);
   }
 }
-html .hero .hero-body .container, body .hero .hero-body .container {
-  width: 100%;
-}
 html .hero .hero-body .container .columns .column, body .hero .hero-body .container .columns .column {
   display: flex;
   flex-direction: column;
+  padding-left: 0px;
+  margin-right: 20px;
+  margin-left: 35px;
 }
-html .hero .hero-body .container .columns .column .play-button, body .hero .hero-body .container .columns .column .play-button {
-  padding: 15px;
+@media screen and (max-width: 767px) {
+  html .hero .hero-body .container .columns .column, body .hero .hero-body .container .columns .column {
+    align-items: center;
+    text-align: center;
+  }
 }
 html .hero .hero-body .container .home-intro, body .hero .hero-body .container .home-intro {
   font-size: 60px;
@@ -47,7 +55,15 @@ html .hero .hero-body .container .home-intro, body .hero .hero-body .container .
   text-align: center;
   text-transform: uppercase;
 }
+html .hero .hero-body .overlay, body .hero .hero-body .overlay {
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: 0.7;
+  z-index: 3;
+}
 html .hero .hero-body .nav, body .hero .hero-body .nav {
+  width: 100%;
   position: absolute;
   top: 10px;
   width: 100%;
@@ -57,23 +73,9 @@ html .hero .hero-body .nav, body .hero .hero-body .nav {
   flex-direction: row;
 }
 html .hero .hero-body .nav .container, body .hero .hero-body .nav .container {
+  width: 100%;
   display: flex;
   flex-direction: row;
-}
-html .hero .hero-body .nav .container .nav-left, body .hero .hero-body .nav .container .nav-left {
-  width: 50%;
-  display: flex;
-  justify-content: stretch;
-  cursor: pointer;
-}
-@media screen and (max-width: 589px) {
-  html .hero .hero-body .nav .container .nav-left, body .hero .hero-body .nav .container .nav-left {
-    flex-flow: row wrap;
-  }
-}
-html .hero .hero-body .nav .container .nav-right, body .hero .hero-body .nav .container .nav-right {
-  width: 50%;
-  display: flex;
   justify-content: flex-end;
 }
 html .hero .hero-body .nav .nav-item, body .hero .hero-body .nav .nav-item {
@@ -95,9 +97,12 @@ html .hero .hero-body .nav .nav-item, body .hero .hero-body .nav .nav-item {
   padding: 0.5rem 0.75rem;
   white-space: nowrap;
 }
-html .hero .hero-body .nav .nav-item .fa-bars, body .hero .hero-body .nav .nav-item .fa-bars {
-  color: #ce2424;
-  font-size: 40px;
+@media screen and (max-width: 767px) {
+  html .hero .hero-body .nav .nav-item, body .hero .hero-body .nav .nav-item {
+    position: absolute;
+    top: 0px;
+    right: 50%;
+  }
 }
 html .hero .hero-body .nav .nav-item .tag, body .hero .hero-body .nav .nav-item .tag {
   -webkit-box-align: center;
@@ -164,14 +169,16 @@ html .hero .hero-body .column .links .play-button, body .hero .hero-body .column
   border: 0px;
   margin-right: 20px;
   padding: 15px;
-}
-html .hero .hero-body .column .links .play-button .fa-play, body .hero .hero-body .column .links .play-button .fa-play {
-  padding-left: 7px;
+  text-decoration: none;
 }
 @media screen and (max-width: 767px) {
   html .hero .hero-body .column .links .play-button, body .hero .hero-body .column .links .play-button {
     font-size: 14px;
+    padding: 5px;
   }
+}
+html .hero .hero-body .column .links .play-button .fa-play, body .hero .hero-body .column .links .play-button .fa-play {
+  padding-left: 7px;
 }
 html .hero .hero-body .column .links .favorites-button, body .hero .hero-body .column .links .favorites-button {
   text-decoration: none;
@@ -191,6 +198,7 @@ html .hero .hero-body .column .links .favorites-button .fa-plus-square-o, body .
     color: #4a4a4a;
     border-radius: 15px;
     font-size: 14px;
+    padding: 5px;
   }
   html .hero .hero-body .column .links .favorites-button:hover, body .hero .hero-body .column .links .favorites-button:hover {
     background: #FFF;
@@ -215,13 +223,22 @@ html .hero .hero-foot .columns, body .hero .hero-foot .columns {
   padding-bottom: 30px;
   padding-top: 20px;
   text-align: center;
-  width: 100%;
 }
 html .hero .hero-foot .columns .column, body .hero .hero-foot .columns .column {
   flex-basis: 0;
 }
 html .hero .hero-foot .columns .column img, body .hero .hero-foot .columns .column img {
   height: 186px;
+}
+@media screen and (max-width: 767px) {
+  html .hero .hero-foot .columns, body .hero .hero-foot .columns {
+    padding-top: 0px;
+  }
+}
+@media screen and (max-width: 767px) {
+  html .hero .hero-foot .columns :first-child, body .hero .hero-foot .columns :first-child {
+    margin-left: 11px;
+  }
 }
 html .hero .hero-foot .columns .movie-choice, body .hero .hero-foot .columns .movie-choice {
   position: relative;
@@ -231,8 +248,8 @@ html .hero .hero-foot .columns .movie-choice, body .hero .hero-foot .columns .mo
 }
 html .hero .hero-foot .columns .movie-choice .favorite-check, body .hero .hero-foot .columns .movie-choice .favorite-check {
   position: absolute;
-  right: 5px;
-  top: 5px;
+  right: 10px;
+  top: 10px;
   z-index: 1;
   color: #fcff4c;
 }
@@ -241,6 +258,9 @@ html .hero .hero-foot .columns .movie-choice .favorite-check, body .hero .hero-f
     position: initial;
     display: block;
   }
+}
+html .hero .hero-foot .columns .movie-choice .favorite-check .fa-check-circle:before, body .hero .hero-foot .columns .movie-choice .favorite-check .fa-check-circle:before {
+  content: "";
 }
 html .hero .hero-foot .columns .movie-choice img, body .hero .hero-foot .columns .movie-choice img {
   opacity: 0.9;
@@ -305,6 +325,27 @@ html .hide, body .hide {
   height: auto;
   display: block;
   z-index: 999;
+}
+
+#overlay {
+  position: fixed;
+  /* Sit on top of the page content */
+  display: none;
+  /* Hidden by default */
+  width: 100%;
+  /* Full width (cover the whole page) */
+  height: 100%;
+  /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Black background with opacity */
+  z-index: 2;
+  /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer;
+  /* Add a pointer on hover */
 }
 
 /*# sourceMappingURL=vueflix.css.map */
